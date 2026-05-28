@@ -294,7 +294,7 @@ export default function HomePage() {
       <nav className="nav">
         <a href="/" className="nav-logo">
           <img src="/logo.png" alt="GloryZone logo" style={{ width:24, height:24 }} />
-          GloryZone
+          GloryZoneChurch
         </a>
         <ul className="nav-links">
           <li><a href="#how"      className="nav-link">How it works</a></li>
