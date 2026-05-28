@@ -7,25 +7,18 @@ import {
   updateDoc,
   increment,
 } from "firebase/firestore";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function CheckinPage() {
-
+function CheckinContent() {
   const params = useSearchParams();
   const token = params.get("token");
-
   const [message, setMessage] = useState("Checking in...");
 
   useEffect(() => {
-
     const checkIn = async () => {
-
       const ref = doc(db, "currentService", "active");
-
       const snap = await getDoc(ref);
-
       const data = snap.data();
 
       if (!data) {
@@ -46,12 +39,23 @@ export default function CheckinPage() {
     };
 
     checkIn();
-
   }, [token]);
 
   return (
     <div className="h-screen flex items-center justify-center text-3xl font-bold">
       {message}
     </div>
+  );
+}
+
+export default function CheckinPage() {
+  return (
+    <Suspense fallback={
+      <div className="h-screen flex items-center justify-center text-3xl font-bold">
+        Loading...
+      </div>
+    }>
+      <CheckinContent />
+    </Suspense>
   );
 }
